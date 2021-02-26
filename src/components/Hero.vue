@@ -8,7 +8,7 @@
                             <div class="justify-content-center align-self-center">
                                 <h2><strong>Delicius Food Menu, </strong> <br> in your gadget!!</h2>
                                 <p>let's immediately select and order your favorite food</p>
-                                <a href="" class="btn btn-md btn-success "><b-icon-arrow-right></b-icon-arrow-right> Order</a>
+                                <router-link to="/foods" class="btn btn-md btn-success"><b-icon-arrow-right></b-icon-arrow-right> Order</router-link>
                             </div>
                         </div>
                 </div>

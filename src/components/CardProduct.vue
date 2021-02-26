@@ -4,7 +4,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ item.nama }}</h5>
             <p class="card-text">Harga : Rp. {{item.harga}}</p>
-            <a href="#" class="btn btn-success"><b-icon-cart></b-icon-cart> Order</a>
+            <router-link :to="'/foods/'+ item.id" class="btn btn-success"><b-icon-cart></b-icon-cart> Order</router-link>
         </div>
     </div>
 </template>
