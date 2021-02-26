@@ -15,3 +15,4 @@ npm run serve
 npm run build
 ```
 Video part 3: Make page home \
+Video part 4 - 5: Add card product in page home + get data product using axios \
