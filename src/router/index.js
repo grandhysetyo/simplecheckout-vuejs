@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Foods from '../views/Foods.vue'
 import FoodDetail from '../views/FoodDetail.vue'
+import Cart from '../views/Cart.vue'
+import SuccessCheckout from '../views/SuccessCheckout.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,16 @@ const routes = [
     name: 'FoodDetail',
     component: FoodDetail,
     props: true
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart  
+  },
+  {
+    path: '/success-order',
+    name: 'SuccessCheckout',
+    component: SuccessCheckout  
   }
 ]
 

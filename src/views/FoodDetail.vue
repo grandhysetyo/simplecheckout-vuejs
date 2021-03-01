@@ -16,22 +16,23 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">                
-                <img :src="product.gambar" width="100%" class="img-fluid shadows">
+            <div class="col-md-6">  
+               <img v-if="product.gambar" :src="imageUrl(product.gambar)" width="100%" class="img-fluid shadows" />          
+                
             </div>
             <div class="col-md-6">
                 <h2>{{ product.nama }}</h2>
                 <h4>Harga: <strong>Rp. {{ product.harga }}</strong></h4>
-                <form action="" class="mt-3">
+                <form class="mt-3" v-on:submit.prevent="">
                     <div class="form-group">
                         <label for="qty-order">Qty</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" v-model="pesanan.qty">
                     </div>
                     <div class="form-group">
                         <label for="notes">Notes</label>
-                        <textarea class="form-control" placeholder="ex. Nasi Pedes Bangett.."></textarea>
+                        <textarea class="form-control" placeholder="ex. Nasi Pedes Bangett.." v-model="pesanan.notes"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success"><b-icon-cart></b-icon-cart> Add to cart</button>
+                    <button type="submit" class="btn btn-success" @click="handlePesanan"><b-icon-cart></b-icon-cart> Add to cart</button>
                 </form>
             </div>
         </div>
@@ -47,31 +48,59 @@ export default {
     props: ['id'],
     data() {
         return {
-            product: []
+            product: [],
+            pesanan: {}
         }
     },
     computed: {
         
     },
-    methods:{
+    methods:{        
         imageUrl(name) {
             return require('../assets/images/' + name)
-        },
+        },        
         setProduct(){
             axios.get('http://localhost:3000/products/'+this.id).then((response) => {
                 // handle success
                 console.log(response);
                 this.product = response.data     
-                this.product.gambar = this.imageUrl(response.data.gambar)
+                // this.product.gambar = this.imageUrl(response.data.gambar)
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
             }) 
+        },
+        handlePesanan(){
+            if(this.pesanan.qty) {
+                this.pesanan.product = this.product
+                axios.post('http://localhost:3000/keranjang', this.pesanan).then(() => {
+                    // handle success
+                    console.log('Success')
+                    this.$toast.success('Berhasil menambahkan keranjang', {
+                        type: 'success',
+                        position: 'top-right',
+                        duration: 3000,
+                        dismissible: false
+                    })
+                    this.$router.push({path: "/cart" })
+                })
+                .catch((error) => {
+                    // handle error
+                    console.log(error);
+                })
+            }else {
+                this.$toast.success('Qty pesanan harus diisi!', {
+                        type: 'error',
+                        position: 'top-right',
+                        duration: 3000,
+                        dismissible: false
+                    })
+            }
         }           
     },
     mounted() {
-        this.setProduct()
+        this.setProduct();
     }
 }
 </script>
